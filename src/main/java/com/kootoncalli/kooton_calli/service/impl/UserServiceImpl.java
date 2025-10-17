@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.kootoncalli.kooton_calli.dto.RoleDto;
 import com.kootoncalli.kooton_calli.dto.UserDto;
 import com.kootoncalli.kooton_calli.model.User;
 import com.kootoncalli.kooton_calli.repository.UserRepository;
@@ -79,21 +78,45 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto update(Integer id, UserDto user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public UserDto update(Integer id, UserDto userDto) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isEmpty()){
+            throw new IllegalStateException("User does not exist with id " + id);
+        } 
+        User existingUser = userOptional.get();
+        User newUser = userDtoToUser(userDto);
+
+        existingUser.setEmail(newUser.getEmail());
+        existingUser.setPassword(newUser.getPassword());
+        existingUser.setName(newUser.getName());
+        existingUser.setLastName(newUser.getLastName());
+        existingUser.setPhone(newUser.getPhone());
+       
+        return userToUserDto(userRepository.save(existingUser));
     }
 
     @Override
     public void deleteByID(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteByID'");
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isEmpty()) {
+            throw new IllegalStateException("User does not exist with id " + id);
+        }
+        User existingUser = userOptional.get();
+        userRepository.delete(existingUser);
     }
 
-    @Override
-    public Iterable<UserDto> findByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
-    }
+   
+//     @Override
+// public Iterable<UserDto> findAllByName(String name) {
+//     Iterable<User> users = userRepository.findAllByName(name);
+//     List<UserDto> usersDto = new ArrayList<>();
+//     for (User user : users) {
+//         usersDto.add(userToUserDto(user));
+//     }
+//     if (usersDto.isEmpty()) {
+//         throw new IllegalStateException("No users found with name: " + name);
+//     }
+//     return usersDto;
+// }
 
 }
