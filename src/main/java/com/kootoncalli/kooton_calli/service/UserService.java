@@ -1,5 +1,7 @@
 package com.kootoncalli.kooton_calli.service;
 
+// import java.util.List;
+
 import com.kootoncalli.kooton_calli.dto.UserDto;
 
 
@@ -15,7 +17,7 @@ public interface UserService {
     UserDto update(Integer id, UserDto user);
     void deleteByID(Integer id);
 
-    //Metodo de User Repository para traer nombres
-    Iterable<UserDto> findByName(String name);
+    // //Metodo de User Repository para traer nombres
+    // Iterable<UserDto> findAllByName(String name);
 
 }
