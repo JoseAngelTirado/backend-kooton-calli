@@ -63,7 +63,7 @@ public class ProductDto {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ProductDto [id=");
+        builder.append("Product [id=");
         builder.append(id);
         builder.append(", name=");
         builder.append(name);
