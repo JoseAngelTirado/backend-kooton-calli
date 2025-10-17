@@ -1,11 +1,15 @@
 package com.kootoncalli.kooton_calli.model;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +21,8 @@ public class Role {
 
     @Column(name="role_name" , length = 50, nullable = false) private String roleName;
 
+    @OneToMany(mappedBy = "role")
+    private Set<User> users = new HashSet<>();
 
     public Role() {
 

@@ -1,3 +1,4 @@
+/** 
 package com.kootoncalli.kooton_calli.model;
 
 import java.math.BigDecimal;
@@ -112,4 +113,4 @@ public class SaleProduct {
 
 
 
-}
+}*/

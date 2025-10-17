@@ -8,7 +8,7 @@ public interface SaleTicketRepository extends CrudRepository<SalesTicket, Intege
 
     //Devuelve todos los tickets de un cliente en espeecífico
     //Select * from sales_tickets where total_amount = (%?%)
-    Iterable<SalesTicket> findAllByTotalAmountContaining(Integer totalAmount);
+    //Iterable<SalesTicket> findAllByTotalAmountContaining(Integer totalAmount);
 
 
 }
