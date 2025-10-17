@@ -10,7 +10,7 @@ public interface UserService {
     UserDto save(UserDto user);
     UserDto findById(Integer id);
 
-    Iterable<UserDto> finaAll();
+    Iterable<UserDto> findAll();
 
     UserDto update(Integer id, UserDto user);
     void deleteByID(Integer id);

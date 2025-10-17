@@ -1,7 +1,12 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
+import com.kootoncalli.kooton_calli.dto.RoleDto;
 import com.kootoncalli.kooton_calli.dto.UserDto;
 import com.kootoncalli.kooton_calli.model.User;
 import com.kootoncalli.kooton_calli.repository.UserRepository;
@@ -53,14 +58,24 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto findById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isEmpty()){
+            throw new IllegalStateException("User does not exist wiht id " + id);
+        }
+        User existingUser = userOptional.get();
+        return userToUserDto(existingUser);
     }
 
     @Override
-    public Iterable<UserDto> finaAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'finaAll'");
+    public Iterable<UserDto> findAll() {
+        List<UserDto> usersDto = new ArrayList<>();
+        Iterable<User> users = userRepository.findAll();
+        for(User user: users){
+            UserDto userDto = new UserDto(user.getId(), user.getEmail(), user.getPassword(),user.getName(), user.getLastName(), user.getPhone());
+            usersDto.add(userDto);
+        }
+        return usersDto;
+        
     }
 
     @Override
