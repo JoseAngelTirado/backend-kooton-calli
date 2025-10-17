@@ -62,7 +62,7 @@ public class SaleProductDto {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Sale Productgit [idTicket=");
+        builder.append("Sale Product [idTicket=");
         builder.append(idTicket);
         builder.append(", idProduct=");
         builder.append(idProduct);
