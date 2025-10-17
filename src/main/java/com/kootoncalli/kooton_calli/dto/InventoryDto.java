@@ -1,3 +1,5 @@
+package com.kootoncalli.kooton_calli.dto;
+
 import java.math.BigDecimal;
 
 /**
