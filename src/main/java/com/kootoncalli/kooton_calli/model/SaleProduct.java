@@ -59,7 +59,7 @@ public class SaleProduct {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SalesDetail [productsAmount=");
+        builder.append("Sale Product [productsAmount=");
         builder.append(productsAmount);
         builder.append(", unitPrice=");
         builder.append(unitPrice);

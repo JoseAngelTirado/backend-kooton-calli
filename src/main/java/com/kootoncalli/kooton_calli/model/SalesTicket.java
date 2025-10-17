@@ -62,7 +62,7 @@ public class SalesTicket {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SalesTicket [id=");
+        builder.append("Sales Ticket [id=");
         builder.append(id);
         builder.append(", totalAmount=");
         builder.append(totalAmount);
