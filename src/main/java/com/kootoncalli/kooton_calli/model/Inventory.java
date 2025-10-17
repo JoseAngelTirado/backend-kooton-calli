@@ -64,7 +64,7 @@ public class Inventory {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ProductDetail [id=");
+        builder.append("Inventory [id=");
         builder.append(id);
         builder.append(", quantity=");
         builder.append(quantity);
