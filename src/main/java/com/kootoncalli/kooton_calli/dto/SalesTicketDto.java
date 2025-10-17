@@ -15,7 +15,7 @@ public class SalesTicketDto {
 	}
 	
 	// Constructor with fields
-	public SalesTicketDto(Integer idTicket, BigDecimal totalAmount, LocalDate dateTime, Integer idCustomer,
+	public SalesTicketDto(Integer idTicket, BigDecimal totalAmount, LocalDateTime dateTime, Integer idCustomer,
 			Integer idEmployee) {
 		this.idTicket = idTicket;
 		this.totalAmount = totalAmount;
@@ -41,11 +41,11 @@ public class SalesTicketDto {
 		this.totalAmount = totalAmount;
 	}
 
-	public LocalDate getDateTime() {
+	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(LocalDate dateTime) {
+	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 
