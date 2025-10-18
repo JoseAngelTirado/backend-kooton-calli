@@ -12,7 +12,7 @@ import com.kootoncalli.kooton_calli.model.Role;
 import com.kootoncalli.kooton_calli.repository.RoleRepository;
 
 @Component
-@Order(2)
+@Order(1)
 @Profile("dev")
 public class RoleDataLoader implements CommandLineRunner {
 

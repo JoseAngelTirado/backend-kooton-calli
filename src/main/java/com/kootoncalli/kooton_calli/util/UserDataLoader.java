@@ -1,8 +1,5 @@
 package com.kootoncalli.kooton_calli.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
@@ -10,39 +7,40 @@ import org.springframework.stereotype.Component;
 
 import com.kootoncalli.kooton_calli.model.Role;
 import com.kootoncalli.kooton_calli.model.User;
+import com.kootoncalli.kooton_calli.repository.RoleRepository; 
 import com.kootoncalli.kooton_calli.repository.UserRepository;
 
 @Component
-@Order(1)
+@Order(2)
 @Profile("dev")
 public class UserDataLoader implements CommandLineRunner{
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserDataLoader(UserRepository userRepository) {
+    public UserDataLoader(UserRepository userRepository, RoleRepository roleRepository) { 
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository; // <-- ¡Ahora sí funciona!
     }
+
 
     @Override
     public void run(String... args) throws Exception {
-    
+
+        Role adminRole = roleRepository.findByRoleName("Admin")
+            .orElseThrow(() -> new IllegalStateException("Role 'Admin' not found"));
         
         User peter = new User();
         peter.setEmail("peter@example.com");
         peter.setPassword("123");
         peter.setName("Peter");
         peter.setLastName("Languila");
-        peter.setPhone("1234567890"); // Asumiendo que "Admin" es el nombre del rol
-        userRepository.save(peter);
+        peter.setPhone("1234567890"); 
 
-        Set <Role> roles = new HashSet<>();
-        roles.add(new Role(null));
-        peter.setRoles(roles);
+
+        peter.setRole(adminRole);
 
         userRepository.save(peter);
-
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        }
     }
-
-}
 
