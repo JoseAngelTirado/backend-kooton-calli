@@ -29,7 +29,7 @@ public class User {
     @Column(name="phone", length = 12, nullable = false) private String phone;
 
     @ManyToOne
-    @JoinColumn(name = "id_role", nullable = false)
+    @JoinColumn(name = "id_role", nullable = true)
     private Role role;
 
     @CreationTimestamp

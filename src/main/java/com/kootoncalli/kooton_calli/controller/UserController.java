@@ -29,7 +29,7 @@ public class UserController {
             this.userService = userService;
        }
 
-       @GetMapping("/{id}")
+       @GetMapping("/api/v1/users")
        ResponseEntity<Iterable<UserDto>> getAllUsers(){
              return ResponseEntity.ok(userService.findAll());
        }

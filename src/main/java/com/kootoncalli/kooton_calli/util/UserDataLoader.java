@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.kootoncalli.kooton_calli.model.Role;
 import com.kootoncalli.kooton_calli.model.User;
 import com.kootoncalli.kooton_calli.repository.UserRepository;
 
@@ -21,6 +22,11 @@ public class UserDataLoader implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
+
+        Role userRole = new Role();
+        userRole.setName("USER");
+        roleRepository.save(userRole);
+    
         
         User peter = new User();
         peter.setEmail("peter@example.com");

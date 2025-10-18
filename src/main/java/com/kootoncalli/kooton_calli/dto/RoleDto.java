@@ -3,19 +3,21 @@ package com.kootoncalli.kooton_calli.dto;
 
 public class RoleDto {
 
-    private Long idRole;
+    private Integer idRole;
     private String roleName;
 
     public RoleDto() {
     }
-    public RoleDto(Long idRole, String roleName) {
+
+    public RoleDto(Integer idRole, String roleName) {
         this.idRole = idRole;
         this.roleName = roleName;
     }
-    public Long getIdRole() {
+    
+    public Integer getIdRole() {
         return idRole;
     }
-    public void setIdRole(Long idRole) {
+    public void setIdRole(Integer idRole) {
         this.idRole = idRole;
     }
 

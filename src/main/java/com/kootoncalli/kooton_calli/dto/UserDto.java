@@ -18,7 +18,7 @@ public class UserDto {
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;  
-}
+    }
 
     public Integer getId() {
         return id;
@@ -68,18 +68,18 @@ public class UserDto {
         this.phone = phone;
     }
 
-   @Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("UserDto [");
-    sb.append("id=").append(id)
-      .append(", email=").append(email)
-      .append(", password=").append(password)
-      .append(", name=").append(name)
-      .append(", lastName=").append(lastName)
-      .append(", phone=").append(phone)
-      .append("]");
-    return sb.toString();
-}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("UserDto [");
+        sb.append("id=").append(id)
+        .append(", email=").append(email)
+        .append(", password=").append(password)
+        .append(", name=").append(name)
+        .append(", lastName=").append(lastName)
+        .append(", phone=").append(phone)
+        .append("]");
+        return sb.toString();
+    }
 
 }
