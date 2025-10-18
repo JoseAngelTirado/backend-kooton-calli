@@ -1,5 +1,8 @@
 package com.kootoncalli.kooton_calli.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
@@ -22,10 +25,6 @@ public class UserDataLoader implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-
-        Role userRole = new Role();
-        userRole.setName("USER");
-        roleRepository.save(userRole);
     
         
         User peter = new User();
@@ -33,11 +32,12 @@ public class UserDataLoader implements CommandLineRunner{
         peter.setPassword("123");
         peter.setName("Peter");
         peter.setLastName("Languila");
-        peter.setPhone("1234567890");
+        peter.setPhone("1234567890"); // Asumiendo que "Admin" es el nombre del rol
         userRepository.save(peter);
 
-        /* Set <Role> roles = new HashSet<>();
-        roles.add(new Role()) */
+        Set <Role> roles = new HashSet<>();
+        roles.add(new Role(null));
+        peter.setRoles(roles);
 
         userRepository.save(peter);
 
