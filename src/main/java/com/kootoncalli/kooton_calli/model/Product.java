@@ -1,10 +1,13 @@
 package com.kootoncalli.kooton_calli.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +20,11 @@ public class Product {
     @Column(name="subcategory", length = 50, nullable = false) private String subcategory;
     @Column(name="category", length = 50, nullable = false) private String category;
     @Column(name="description", length = 255, nullable = false) private String description;
+
+    //Relacion OneToMany para la relacion con llave foranea en la tabla SaleProduct
+    @OneToMany(mappedBy = "product")
+    private Set<SaleProduct> saleProducts;
+
 
     public Product() {}
 

@@ -3,6 +3,7 @@ package com.kootoncalli.kooton_calli.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +25,11 @@ public class SalesTicket {
     @Column(name="total_amount", nullable=false, precision = 10, scale = 2)private BigDecimal totalAmount;
     @CreationTimestamp
     @Column(name = "date_time", nullable = false, updatable = false) private LocalDateTime dateTime;
+
+
+    //Relacion OneToMany para la relacion con llave foranea en la Tabla SaleTicket
+    @OneToMany(mappedBy = "saleTicket")
+    private Set<SaleProduct> saleProducts;
 
     public SalesTicket(){
 
