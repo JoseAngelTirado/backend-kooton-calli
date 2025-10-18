@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.kootoncalli.kooton_calli.dto.RoleDto;
 import com.kootoncalli.kooton_calli.model.Role;
 import com.kootoncalli.kooton_calli.repository.RoleRepository;
 import com.kootoncalli.kooton_calli.service.RoleService;
-
+@Service
 public class RoleServiceImpl implements RoleService{
     
     private final RoleRepository roleRepository;
@@ -84,6 +86,11 @@ public class RoleServiceImpl implements RoleService{
         }
         Role existingRole = roleOptional.get();
         roleRepository.delete(existingRole);
+    }
+
+    @Override
+    public RoleDto getRoleById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

@@ -1,7 +1,7 @@
 package com.kootoncalli.kooton_calli.util;
 
 import org.springframework.boot.CommandLineRunner;
-//import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import com.kootoncalli.kooton_calli.repository.UserRepository;
 
 @Component
 @Order(1)
-//@Profile
+@Profile("dev")
 public class UserDataLoader implements CommandLineRunner{
 
     private final UserRepository userRepository;
