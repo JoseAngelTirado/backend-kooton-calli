@@ -20,8 +20,7 @@ public class UserDataLoader implements CommandLineRunner{
 
     public UserDataLoader(UserRepository userRepository, RoleRepository roleRepository) { 
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository; // <-- ¡Ahora sí funciona!
-    }
+        this.roleRepository = roleRepository;     }
 
 
     @Override
