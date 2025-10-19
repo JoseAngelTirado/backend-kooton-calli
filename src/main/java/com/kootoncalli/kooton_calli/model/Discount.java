@@ -21,21 +21,33 @@ public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer id;
 
-    @Column(name="discount_amount", precision = 10, scale = 2) private BigDecimal discountAmoount;
+    @Column(name = "discount_name", nullable = false) private String discountName;
+    @Column(name="discount_amount", precision = 5, scale = 2) private BigDecimal discountAmount;
     @Column(name="discount_start_date", nullable = false) private LocalDate discountStartDate;
     @Column(name="discount_end_date", nullable = false) private LocalDate discountEndDate;
 
     @ManyToOne
-    @JoinColumn(name = "id_product, nullable = true")
-    private Discount discount; 
+    @JoinColumn(name = "id_product", nullable = true)
+    private Product product; 
     
     public Discount() {}
 
-    public Discount(Integer id, BigDecimal discountAmoount, LocalDate discountStartDate, LocalDate discountEndDate) {
+   
+    public Discount(Integer id, String discountName, BigDecimal discountAmount, LocalDate discountStartDate,
+            LocalDate discountEndDate) {
         this.id = id;
-        this.discountAmoount = discountAmoount;
+        this.discountName = discountName;
+        this.discountAmount = discountAmount;
         this.discountStartDate = discountStartDate;
         this.discountEndDate = discountEndDate;
+    }
+
+    public String getDiscountName() {
+        return discountName;
+    }
+
+    public void setDiscountName(String discountName) {
+        this.discountName = discountName;
     }
 
     public Integer getId() {
@@ -46,12 +58,12 @@ public class Discount {
         this.id = id;
     }
 
-    public BigDecimal getDiscountAmoount() {
-        return discountAmoount;
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
     }
 
-    public void setDiscountAmoount(BigDecimal discountAmoount) {
-        this.discountAmoount = discountAmoount;
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
     public LocalDate getDiscountStartDate() {
@@ -75,8 +87,10 @@ public class Discount {
         StringBuilder builder = new StringBuilder();
         builder.append("Discount [id=");
         builder.append(id);
+        builder.append(", discountName=");
+        builder.append(discountName);
         builder.append(", discountAmount=");
-        builder.append(discountAmoount);
+        builder.append(discountAmount);
         builder.append(", discountStartDate=");
         builder.append(discountStartDate);
         builder.append(", discountEndDate=");
@@ -91,11 +105,13 @@ public class Discount {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((discountAmoount == null) ? 0 : discountAmoount.hashCode());
+        result = prime * result + ((discountName == null) ? 0 : discountName.hashCode());
+        result = prime * result + ((discountAmount == null) ? 0 : discountAmount.hashCode());
         result = prime * result + ((discountStartDate == null) ? 0 : discountStartDate.hashCode());
         result = prime * result + ((discountEndDate == null) ? 0 : discountEndDate.hashCode());
         return result;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -111,10 +127,15 @@ public class Discount {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (discountAmoount == null) {
-            if (other.discountAmoount != null)
+        if (discountName == null) {
+            if (other.discountName != null)
                 return false;
-        } else if (!discountAmoount.equals(other.discountAmoount))
+        } else if (!discountName.equals(other.discountName))
+            return false;
+        if (discountAmount == null) {
+            if (other.discountAmount != null)
+                return false;
+        } else if (!discountAmount.equals(other.discountAmount))
             return false;
         if (discountStartDate == null) {
             if (other.discountStartDate != null)
@@ -129,6 +150,8 @@ public class Discount {
         return true;
     }
 
+
+    
 
     
 
