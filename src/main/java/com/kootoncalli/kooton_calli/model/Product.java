@@ -1,5 +1,6 @@
 package com.kootoncalli.kooton_calli.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -24,6 +25,9 @@ public class Product {
     //Relacion OneToMany para la relacion con llave foranea en la tabla SaleProduct
     @OneToMany(mappedBy = "product")
     private Set<SaleProduct> saleProducts;
+    
+    @OneToMany(mappedBy = "product")
+    private Set<Discount> discounts = new HashSet<>();
 
 
     public Product() {}

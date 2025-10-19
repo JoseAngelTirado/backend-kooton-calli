@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,8 +25,11 @@ public class Discount {
     @Column(name="discount_start_date", nullable = false) private LocalDate discountStartDate;
     @Column(name="discount_end_date", nullable = false) private LocalDate discountEndDate;
 
+    @ManyToOne
+    @JoinColumn(name = "id_product, nullable = true")
+    private Discount discount; 
+    
     public Discount() {}
-
 
     public Discount(Integer id, BigDecimal discountAmoount, LocalDate discountStartDate, LocalDate discountEndDate) {
         this.id = id;
