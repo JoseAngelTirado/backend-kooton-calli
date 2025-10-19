@@ -85,8 +85,4 @@ public class SaleProductId implements Serializable{
         return true;
     }
 
-    
-
-    
-
 }

@@ -23,7 +23,7 @@ public class SaleProduct {
     private SaleProductId id;
 
 
-    //Dos llaves foraneas componen a la lalve primaria en esta tabla SaleProduct
+    //Dos llaves foraneas componen a la llave primaria en esta tabla SaleProduct
     //Declaracion de la llave foranea en la tabla SaleTicket
     @ManyToOne
     @MapsId("idTicket")
@@ -31,13 +31,13 @@ public class SaleProduct {
     private SalesTicket saleTicket;
 
 
-    //Declaracionc de la llave foranea en la tabla Product
+    //Declaracion de la llave foranea en la tabla Product
     @ManyToOne
     @MapsId("idProduct")
     @JoinColumn(name = "id_product")
     private Product product;
 
-
+    //Declarion de las columnas 
     @Column(name="products_amount", nullable = false) private Integer productsAmount;
     @Column(name="unit_price", nullable=false, precision = 10, scale = 2)private BigDecimal unitPrice;
     @Column(name="subtotal", nullable=false, precision = 10, scale = 2)private BigDecimal subtotal;
