@@ -61,8 +61,6 @@ public class SaleProductServiceImpl implements SaleProductService{
     }
 
 
-
-
     @Override
     public SaleProductDto findById(SaleProductDto saleProductDto) {
 
@@ -77,9 +75,9 @@ public class SaleProductServiceImpl implements SaleProductService{
             + saleProductDto.getIdTicket() + ", idProduct=" + saleProductDto.getIdProduct());
     }
         //se obtiene la entidad
-        SaleProduct existingProducSale = saleProductOptional.get();
+        SaleProduct existingProductSale = saleProductOptional.get();
         //Se convierte la entidad a DTO 
-        return saleProductToSaleProductDto(existingProducSale);
+        return saleProductToSaleProductDto(existingProductSale);
     }
 
     @Override
@@ -105,15 +103,49 @@ public class SaleProductServiceImpl implements SaleProductService{
     }
 
     @Override
-    public SaleProductDto update(Integer idSaleProduct, SaleProductDto saleProduct) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public SaleProductDto update(Integer idTicket, Integer idProduct, SaleProductDto saleProduct) {
+        //Debemos construir la llave comupuesta con ambos Id's de SaleProductDto
+        SaleProductId id = new SaleProductId(idTicket, idProduct);
+
+        //Se busca el registro en el repositorio con la llave compuesta
+        Optional<SaleProduct> saleProductOptional = saleProductRepository.findById(id);
+
+        //En caso de que no existe la se lanza la excepcion
+        if (saleProductOptional.isEmpty()) {
+        throw new IllegalStateException("SaleProduct does not exist, idTicket=" 
+            + idTicket + ", idProduct=" + idProduct);
+    }
+        //se obtiene la entidad
+        SaleProduct existingProductSale = saleProductOptional.get();
+
+        //Actualizamos los atributos de SaleProduct
+        existingProductSale.setProductsAmount(saleProduct.getProductsAmount());
+        existingProductSale.setUnitPrice(saleProduct.getUnitPrice());
+        existingProductSale.setSubtotal(saleProduct.getSubtotal());
+
+        
+        //Se convierte la entidad a DTO 
+        return saleProductToSaleProductDto(existingProductSale);
     }
 
     @Override
-    public void deleteByID(Integer idSaleProduct) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteByID'");
+    public void deleteByID(Integer idTicket, Integer idProduct) {
+
+        //Se cosntruye el ID compuesto
+        SaleProductId id = new SaleProductId(idTicket, idProduct);
+
+        //Se vrifica si el registro existe
+        Optional<SaleProduct> saleProductOptional = saleProductRepository.findById(id);
+        
+        //Condicional par verificar si existe
+        if (saleProductOptional.isEmpty()) {
+        throw new IllegalStateException("SaleProduct does not exist, idTicket=" 
+            + idTicket + ", idProduct=" + idProduct);
+        }
+
+        //Se elimina el registro
+        saleProductRepository.deleteById(id);
+
     }
 
     @Override
