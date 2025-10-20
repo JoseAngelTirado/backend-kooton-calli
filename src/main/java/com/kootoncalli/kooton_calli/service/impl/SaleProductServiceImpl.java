@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.kootoncalli.kooton_calli.dto.SaleProductDto;
-import com.kootoncalli.kooton_calli.dto.SalesTicketDto;
 import com.kootoncalli.kooton_calli.model.SaleProduct;
 import com.kootoncalli.kooton_calli.model.SaleProductId;
 import com.kootoncalli.kooton_calli.repository.SaleProductRepository;
@@ -15,9 +14,6 @@ import com.kootoncalli.kooton_calli.service.SaleProductService;
 
 @Service
 public class SaleProductServiceImpl implements SaleProductService{
-
-
-
 
     //inyeccion de dependecias 
     private final SaleProductRepository saleProductRepository;
