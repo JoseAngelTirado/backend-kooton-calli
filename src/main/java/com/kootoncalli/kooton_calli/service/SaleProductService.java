@@ -9,8 +9,8 @@ public interface SaleProductService {
     SaleProductDto findById(SaleProductDto saleProductDto);
 
     Iterable<SaleProductDto> findAll();
-    SaleProductDto update(Integer idSaleProduct, SaleProductDto saleProduct);
-    void deleteByID(Integer idSaleProduct);
+    SaleProductDto update(Integer idTicket, Integer idProduct, SaleProductDto saleProduct);
+    void deleteByID(Integer idTicket, Integer idProduct);
 
     public SaleProductDto getSaleProductById(Integer id);
 

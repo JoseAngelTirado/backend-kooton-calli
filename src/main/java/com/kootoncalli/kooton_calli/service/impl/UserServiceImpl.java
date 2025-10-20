@@ -24,14 +24,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto save(UserDto userDto) {
-        userDto.setId(null);
-        User userToSave = userDtoToUser(userDto);
-        User createdUser = userRepository.save(userToSave);
+        userDto.setId(null); //Asegura que le usuario sea nuevo al poner null en el id
+        User userToSave = userDtoToUser(userDto); //traduce DTO a Entidad llamando a userDtoToUser
+        User createdUser = userRepository.save(userToSave); //guardamos en la BD con repository
         return userToUserDto(createdUser);
     }
 
+    //Traductor de UserDTO a User
     private User userDtoToUser(UserDto userDto){
-        User user = new User();
+        User user = new User(); //inicializamos el user
         user.setId(userDto.getId());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    //Traductor de User a UserDTO
     private UserDto userToUserDto(User user){
         UserDto userDto = new UserDto(
             user.getId(),
