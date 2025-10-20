@@ -1,5 +1,7 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -58,16 +60,48 @@ public class SaleProductServiceImpl implements SaleProductService{
         return saleProductDto;
     }
 
+
+
+
     @Override
     public SaleProductDto findById(SaleProductDto saleProductDto) {
-        Optional<SaleProduct> saleProductOptional = saleProductRepository.findById();
-        
+
+        //Debemos construir la llave comupuesta con ambos Id's de SaleProductDto
+        SaleProductId id = new SaleProductId(saleProductDto.getIdTicket(), saleProductDto.getIdTicket());
+
+        //Se busca el registro en el repositorio con la llave compuesta
+        Optional<SaleProduct> saleProductOptional = saleProductRepository.findById(id);
+        //En caso de que no existe la se lanza la excepcion
+        if (saleProductOptional.isEmpty()) {
+        throw new IllegalStateException("SaleProduct does not exist, idTicket=" 
+            + saleProductDto.getIdTicket() + ", idProduct=" + saleProductDto.getIdProduct());
+    }
+        //se obtiene la entidad
+        SaleProduct existingProducSale = saleProductOptional.get();
+        //Se convierte la entidad a DTO 
+        return saleProductToSaleProductDto(existingProducSale);
     }
 
     @Override
     public Iterable<SaleProductDto> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        List<SaleProductDto> saleProductsDto = new ArrayList<>();
+
+        Iterable<SaleProduct> saleProducts = saleProductRepository.findAll();
+        //Iteracion sobre cada entidad
+        for(SaleProduct saleProduct: saleProducts){
+
+            //Obtenecion de los campos para el ID compuesto
+            Integer idTicket = saleProduct.getId().getIdTicket();
+            Integer idProduct = saleProduct.getId().getIdProduct();
+
+
+            SaleProductDto saleProductDto = new SaleProductDto(idTicket, idProduct, saleProduct.getProductsAmount(),
+            saleProduct.getUnitPrice(),
+            saleProduct.getSubtotal()
+            );
+            saleProductsDto.add(saleProductDto);
+        }
+        return saleProductsDto;
     }
 
     @Override
