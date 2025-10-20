@@ -1,5 +1,8 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
+import java.util.*;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kootoncalli.kooton_calli.dto.SalesTicketDto;
@@ -25,7 +28,7 @@ public class SalesTicketImpl implements SalesTicketService {
       }
 
 
-      private SalesTicket salesTicketToSalesTicket(SalesTicketDto salesTicketDto) {
+      private SalesTicket salesTicketDtoToSalesTicket(SalesTicketDto salesTicketDto) {
             SalesTicket salesTicket = new SalesTicket();
             salesTicket.setId(salesTicketDto.getIdTicket());
             salesTicket.setTotalAmount(salesTicketDto.getTotalAmount()); 
@@ -36,14 +39,71 @@ public class SalesTicketImpl implements SalesTicketService {
       }
 
       private SalesTicketDto salesTicketToSalesTicketDto(SalesTicket salesTicket) {
-            SalesTicket salesTicket = new SalesTicket(
-            salesTicket.setIdTicket(),
-            salesTicket.setTotalAmount(), 
-            salesTicket.setDateTime(),
-            salesTicket.setIdCustomer(),
-            salesTicket.setIdEmployee(),
+            SalesTicketDto salesTicketDto = new SalesTicketDto(
+            salesTicket.getId(),
+            salesTicket.getTotalAmount(), 
+            salesTicket.getDateTime(),
+            salesTicket.getIdCustomer(),
+            salesTicket.getIdEmployee()
             );
-            return salesTicket;
+            return salesTicketDto;
       }
 
+      @Override
+      public SalesTicketDto findById(Integer id) {
+        Optional<SalesTicket> salesTicketOptional = salesTicketRepository.findById(id);
+        if(salesTicketOptional.isEmpty()){
+            throw new IllegalStateException("The does not exist with id: " + id);
+        }
+        SalesTicket existingSalesTicket = salesTicketOptional.get();
+        return salesTicketToSalesTicketDto(existingSalesTicket);
+    }
+
+    @Override
+    public Iterable<SalesTicketDto> findAll() {
+        List<SalesTicketDto> salesTicketDto = new ArrayList<>();
+        Iterable<SalesTicket> salesTickets = salesTicketRepository.findAll();
+        for(SalesTicket salesTicket: salesTickets){
+            SalesTicketDto salesTicketDto = new SalesTicketDto(
+            salesTicket.getId(), 
+            salesTicket.getTotalAmount(), 
+            salesTicket.getDateTime(), 
+            salesTicket.getIdCustomer(), 
+            salesTicket.getIdEmployee()
+            );
+            salesTicket.add(salesTicketDto);
+        }
+        return salesTicketDto;
+    }
+
+    @Override
+    public SalesTicketDto update(Integer id, SalesTicketDto salesTicketDto) {
+       Optional<SalesTicket> salesTicketOptional = salesTicketRepository.findById(id);
+       if(salesTicketOptional.isEmpty()){
+        throw new IllegalStateException("Sale Ticket does not exist with id: " + id);
+       }
+       SalesTicket existingSalesTicket = salesTicketOptional.get();
+       SalesTicket newSalesTicket = salesTicketDtoToSalesTicket(salesTicketDto);
+
+      existingSalesTicket.setTotalAmount(newSalesTicket.getTotalAmount());
+      existingSalesTicket.setDateTime(newSalesTicket.getDateTime());
+
+       
+      return salesTicketToSalesTicketDto(salesTicketRepository.save(existingSalesTicket)); 
+      }
+
+      @Override
+      public void deleteByID(Integer id) {
+        Optional<SalesTicket> salesTicketOptional = salesTicketRepository.findById(id);
+        if(salesTicketOptional.isEmpty()){
+            throw new IllegalStateException("Sale Ticket does not exist with id: "+ id);
+        }
+        SalesTicket existingSalesTicket = salesTicketOptional.get();
+        salesTicketRepository.delete(existingSalesTicket);
+    }
+
+    @Override
+    public SalesTicketDto getSaleTicketById(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
