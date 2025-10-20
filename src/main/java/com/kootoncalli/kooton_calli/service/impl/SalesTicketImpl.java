@@ -64,7 +64,7 @@ public class SalesTicketImpl implements SalesTicketService {
         List<SalesTicketDto> salesTicketDto = new ArrayList<>();
         Iterable<SalesTicket> salesTickets = salesTicketRepository.findAll();
         for(SalesTicket salesTicket: salesTickets){
-            SalesTicketDto salesTicketDto = new SalesTicketDto(
+            SalesTicketDto salesTicketDto1 = new SalesTicketDto(
             salesTicket.getId(), 
             salesTicket.getTotalAmount(), 
             salesTicket.getDateTime(), 

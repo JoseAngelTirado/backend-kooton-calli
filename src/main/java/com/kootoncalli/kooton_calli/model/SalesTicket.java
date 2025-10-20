@@ -35,10 +35,12 @@ public class SalesTicket {
 
     }
 
-    public SalesTicket(Integer id, BigDecimal totalAmount, LocalDateTime dateTime) {
+    public SalesTicket(Integer id, BigDecimal totalAmount, LocalDateTime dateTime, Integer idCustomer, Integer idEmployee) {
         this.id = id;
         this.totalAmount = totalAmount;
         this.dateTime = dateTime;
+        this.idCustomer = idCustomer; // Dudas de implementación
+        this.idEmployee = idEmployee;
     }
 
     public Integer getId() {
@@ -115,8 +117,5 @@ public class SalesTicket {
             return false;
         return true;
     }
-
-
-
 
 }
