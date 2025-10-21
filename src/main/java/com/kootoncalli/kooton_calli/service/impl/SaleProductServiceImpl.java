@@ -58,18 +58,21 @@ public class SaleProductServiceImpl implements SaleProductService{
 
 
     @Override
-    public SaleProductDto findById(SaleProductDto saleProductDto) {
+    public SaleProductDto findById(Integer idTicket, Integer idProduct , SaleProductDto saleProduct) {
 
         //Debemos construir la llave comupuesta con ambos Id's de SaleProductDto
-        SaleProductId id = new SaleProductId(saleProductDto.getIdTicket(), saleProductDto.getIdTicket());
+        SaleProductId id = new SaleProductId(idTicket, idProduct);
 
         //Se busca el registro en el repositorio con la llave compuesta
         Optional<SaleProduct> saleProductOptional = saleProductRepository.findById(id);
+
+
         //En caso de que no existe la se lanza la excepcion
         if (saleProductOptional.isEmpty()) {
         throw new IllegalStateException("SaleProduct does not exist, idTicket=" 
-            + saleProductDto.getIdTicket() + ", idProduct=" + saleProductDto.getIdProduct());
-    }
+            + idTicket + ", idProduct=" + idProduct);
+        }
+
         //se obtiene la entidad
         SaleProduct existingProductSale = saleProductOptional.get();
         //Se convierte la entidad a DTO 
