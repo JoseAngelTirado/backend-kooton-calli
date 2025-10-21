@@ -2,10 +2,9 @@ package com.kootoncalli.kooton_calli.model;
 
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,9 +28,18 @@ public class User {
     @Column(name="last_name", length = 50, nullable = false) private String lastName;
     @Column(name="phone", length = 12, nullable = false) private String phone;
 
+    // Roles relation
     @ManyToOne
     @JoinColumn(name = "id_role", nullable = true)
     private Role role;
+
+    // Tickets where user was customer
+    @OneToMany(mappedBy = "customer")
+    private List<SalesTicket> purchases;
+
+    // Tickets where user was employee
+    @OneToMany(mappedBy = "employee")
+    private List<SalesTicket> attendedSales;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false) private LocalDateTime createdAt;

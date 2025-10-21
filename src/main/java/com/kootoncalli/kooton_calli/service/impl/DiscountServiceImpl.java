@@ -54,7 +54,7 @@ public class DiscountServiceImpl implements DiscountService {
     public DiscountDto findById(Integer id) {
         Optional<Discount> discountOptional = discountRepository.findById(id);
         if(discountOptional.isEmpty()){
-            throw new IllegalStateException("Discount does not exist id"+ id);
+            throw new IllegalStateException("Discount does not exist id: "+ id);
             }
             Discount existingDiscount = discountOptional.get();
             return discountToDiscountDto(existingDiscount);

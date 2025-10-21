@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService{
     public UserDto findById(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         if(userOptional.isEmpty()){
-            throw new IllegalStateException("User does not exist wiht id " + id);
+            throw new IllegalStateException("User does not exist with id " + id);
         }
         User existingUser = userOptional.get();
         return userToUserDto(existingUser);
