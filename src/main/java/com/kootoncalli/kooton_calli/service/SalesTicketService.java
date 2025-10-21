@@ -11,4 +11,6 @@ public interface  SalesTicketService {
       SalesTicketDto update(Integer idSaleTicket, SalesTicketDto salesTicketDto);
 
       public SalesTicketDto getSaleTicketById(Integer id);
+      void deleteById(Integer id);
+      void deleteByID(Integer id);
 }

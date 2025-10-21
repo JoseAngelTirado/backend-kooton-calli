@@ -25,6 +25,7 @@ public class SalesTicketImpl implements SalesTicketService {
             salesTicketDto.setId(null);
             SalesTicket salesTicketToSave = salesTicketDtoToSalesTicket (salesTicketDto);
             SalesTicket createdSalesTicket = salesTicketRepository.save(salesTicketToSave);
+            return salesTicketToSalesTicketDto(createdSalesTicket);
       }
 
 
@@ -100,5 +101,11 @@ public class SalesTicketImpl implements SalesTicketService {
     @Override
     public SalesTicketDto getSaleTicketById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
 }
