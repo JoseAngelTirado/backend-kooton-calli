@@ -1,16 +1,21 @@
 package com.kootoncalli.kooton_calli.service;
 
+import java.util.List;
+
 import com.kootoncalli.kooton_calli.dto.SalesTicketDto;
 
 public interface  SalesTicketService {
       // Crud Methods
-      SalesTicketDto save(SalesTicketDto salesTicketDto);
-      SalesTicketDto findById(Integer id);
+    SalesTicketDto save(SalesTicketDto salesTicketDto);
 
-      Iterable<SalesTicketDto> findAll();
-      SalesTicketDto update(Integer idSaleTicket, SalesTicketDto salesTicketDto);
+    SalesTicketDto findById(Integer id);
 
-      public SalesTicketDto getSaleTicketById(Integer id);
-      void deleteById(Integer id);
-      void deleteByID(Integer id);
+    List<SalesTicketDto> findAll();
+
+    SalesTicketDto update(Integer id, SalesTicketDto salesTicketDto);
+
+    void deleteById(Integer id);
+
+
 }
+

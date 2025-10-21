@@ -1,9 +1,6 @@
 package com.kootoncalli.kooton_calli.repository;
 
-import java.math.BigDecimal; // Importa BigDecimal para el tipo correcto
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository; // Importa BigDecimal para el tipo correcto
 
 import com.kootoncalli.kooton_calli.model.SalesTicket;
 
@@ -14,7 +11,7 @@ public interface SalesTicketRepository extends CrudRepository<SalesTicket, Integ
     // Si tu intención era buscar todos los tickets con una CANTIDAD TOTAL EXACTA:
     // El método correcto es 'findAllByTotalAmount' y el tipo de dato debe ser BigDecimal.
     // Consulta SQL: SELECT * FROM sales_tickets WHERE total_amount = ?
-    List<SalesTicket> findAllByTotalAmount(BigDecimal totalAmount);
+    // List<SalesTicket> findAllByTotalAmount(BigDecimal totalAmount);
     
     
     // --- OTRAS OPCIONES COMUNES ---
