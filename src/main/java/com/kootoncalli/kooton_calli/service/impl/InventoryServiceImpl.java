@@ -108,5 +108,17 @@ public class InventoryServiceImpl implements InventoryService {
 
         return inventory;
     }
+
+    @Override
+    public List<InventoryDto> findByProductId(Integer idProduct) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByProductId'");
+    }
+
+    @Override
+    public InventoryDto findByBarCode(String barCode) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByBarCode'");
+    }
 }
 
