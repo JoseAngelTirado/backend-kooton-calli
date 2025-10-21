@@ -1,6 +1,5 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
-import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSubcategory(productDto.getSubcategory());
         product.setCategory(productDto.getCategory());
         product.setDescription(productDto.getDescription());
+        product.setImgUrl(productDto.getImgUrl());
         return product;
     }
 
@@ -51,7 +51,8 @@ public class ProductServiceImpl implements ProductService {
             product.getName(),
             product.getSubcategory(),
             product.getCategory(),
-            product.getDescription()
+            product.getDescription(),
+            product.getImgUrl()
         );
         return productDto;
     }
@@ -80,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> productsDto = new ArrayList<>();
         Iterable<Product> product = productRepository.findAll();
         for (Product p : product) {
-            ProductDto productDto = new ProductDto(p.getId(), p.getName(), p.getSubcategory(), p.getCategory(), p.getDescription());
+            ProductDto productDto = new ProductDto(p.getId(), p.getName(), p.getSubcategory(), p.getCategory(), p.getDescription(), p.getImgUrl());
             productsDto.add(productDto);
         }
         return productsDto;
@@ -106,6 +107,7 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setSubcategory(newProduct.getSubcategory());
         existingProduct.setCategory(newProduct.getCategory());
         existingProduct.setDescription(newProduct.getDescription());
+        existingProduct.setImgUrl(newProduct.getImgUrl());
 
         return productToProductDto(productRepository.save(existingProduct));
     }

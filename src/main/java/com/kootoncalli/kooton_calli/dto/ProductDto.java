@@ -7,17 +7,18 @@ public class ProductDto {
     private String subcategory;
     private String category;
     private String description;
-
+    private String imgUrl;
     public ProductDto() {
 
     }
 
-    public ProductDto(Integer id, String name, String subcategory, String category, String description) {
+    public ProductDto(Integer id, String name, String subcategory, String category, String description, String imgUrl) {
         this.id = id;
         this.name = name;
         this.subcategory = subcategory;
         this.category = category;
         this.description = description;
+        this.imgUrl = imgUrl;
     }
 
     public Integer getId() {
@@ -60,6 +61,14 @@ public class ProductDto {
         this.description = description;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -73,7 +82,11 @@ public class ProductDto {
         builder.append(category);
         builder.append(", description=");
         builder.append(description);
+        builder.append(", imgUrl=");
+        builder.append(imgUrl);
         builder.append("]");
         return builder.toString();
     }
+
+    
 }
