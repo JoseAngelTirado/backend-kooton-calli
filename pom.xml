@@ -74,14 +74,6 @@
             <version>3.3.3</version>
         </dependency>
 	
-	<!--Dpendency to map DTO's-->
-        <dependency> 
-            <groupId>org.modelmapper</groupId>
-            <version>3.2.0</version>
-        </dependency>
-
-
-
     </dependencies>
 
     <build>
