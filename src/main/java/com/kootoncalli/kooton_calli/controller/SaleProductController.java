@@ -20,41 +20,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin(origins = "*")
 public class SaleProductController {
 
+    //inyecion de dependencias
     private final SaleProductService saleProductService;
 
     public SaleProductController(SaleProductService saleProductService) {
         this.saleProductService = saleProductService;
     }
 
-    @GetMapping
-    ResponseEntity<Iterable<SaleProductDto>> getAllSaleProducts(){
+    //Obtener todos los registros
+    @GetMapping //GetMapping responde a las peticiones GET
+    ResponseEntity<Iterable<SaleProductDto>> getAllSaleProducts(){ //El metodo responde un lista de SaleProduct
         return ResponseEntity.ok(saleProductService.findAll());
     }
 
-    @PostMapping
-    ResponseEntity<SaleProductDto> createSaleProduct(@RequestBody SaleProductDto saleProductDto){
-        SaleProductDto createdSaleProduct = saleProductService.save(saleProductDto);
+    //Crear un nuevo registro
+    @PostMapping//PostMapping responde las peticiones POST
+    ResponseEntity<SaleProductDto> createSaleProduct(@RequestBody SaleProductDto saleProductDto){ // el JSON en objeto DTO
+        SaleProductDto createdSaleProduct = saleProductService.save(saleProductDto); //Con el Service guardamos la entidad
         return ResponseEntity.status(201).body(createdSaleProduct);
     }
 
-    @GetMapping("/{id}")
-    ResponseEntity<SaleProductDto> getSaleProductBy(@PathVariable("id") Integer id){
-        SaleProductDto saleProductDto = saleProductService.findById(id, id, null);
+    //Get - Busqueda por IDs compuestos
+    @GetMapping("/{idTicket}/{idProduct}")
+    ResponseEntity<SaleProductDto> getSaleProductBy(
+        @PathVariable("idTicket") Integer idTicket, 
+        @PathVariable("idProduct")Integer idProduct){ //PathVariable captura ese valor de la url y lo guarda en id
+        SaleProductDto saleProductDto = saleProductService.findById(idTicket, idProduct); //llama al Serivce pasando el ID para buscar el registro en la base de datos
         return ResponseEntity.ok(saleProductDto);
     }
 
-    @PutMapping("/{id}")
+    //PUT - actualiza registro por IDs compuestos
+    @PutMapping("/{idTicket}/{idProduct}") //Put Mapping este endpoint actualizara el un registro
     ResponseEntity<SaleProductDto> updateSaleProduct(
-        @PathVariable("id") Integer id, 
-        @RequestBody SaleProductDto saleProductDto
+        @PathVariable("idTicket") Integer idTicket,
+        @PathVariable("idProduct") Integer idProduct,//Obtiene el ID del registro a actualizar
+        @RequestBody SaleProductDto saleProductDto //Toma los nuevos datos del cuerpo de la peticion
     ){
-        SaleProductDto updateSaleProduct = saleProductService.update(id, id, saleProductDto);
-        return ResponseEntity.ok(updateSaleProduct);
+        SaleProductDto updateSaleProduct = saleProductService.update(idTicket, idProduct, saleProductDto); //Service busca el registro
+        return ResponseEntity.ok(updateSaleProduct); //Devuelve el registro actualizado
     }
     
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteSaleProduct(@PathVariable("id") Integer id){
-        saleProductService.deleteByID(id, id);
+    @DeleteMapping("/{idticket}/{idProdcut}")
+    ResponseEntity<Void> deleteSaleProduct(@PathVariable("id") Integer idTicket, @PathVariable("idProduct") Integer idProduct){
+        saleProductService.deleteByID(idTicket, idProduct);
         return ResponseEntity.noContent().build();
     }
     

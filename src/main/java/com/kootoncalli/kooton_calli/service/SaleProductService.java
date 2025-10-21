@@ -6,7 +6,7 @@ public interface SaleProductService {
 
     //Declaramos los metodos CRUD en la inferfaz
     SaleProductDto save(SaleProductDto saleProductDto);
-    SaleProductDto findById(Integer idTicket, Integer idProduct, SaleProductDto saleProduct);
+    SaleProductDto findById(Integer idTicket, Integer idProduct);
 
     Iterable<SaleProductDto> findAll();
     SaleProductDto update(Integer idTicket, Integer idProduct, SaleProductDto saleProduct);

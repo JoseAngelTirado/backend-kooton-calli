@@ -58,7 +58,7 @@ public class SaleProductServiceImpl implements SaleProductService{
 
 
     @Override
-    public SaleProductDto findById(Integer idTicket, Integer idProduct , SaleProductDto saleProduct) {
+    public SaleProductDto findById(Integer idTicket, Integer idProduct) {
 
         //Debemos construir la llave comupuesta con ambos Id's de SaleProductDto
         SaleProductId id = new SaleProductId(idTicket, idProduct);
