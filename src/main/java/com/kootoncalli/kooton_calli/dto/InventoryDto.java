@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class InventoryDto {
 
-    private Integer idInventory;
+    private Integer id;
     private Integer idProduct;
     private Integer quantity;
     private String productSize;
@@ -20,8 +20,8 @@ public class InventoryDto {
     public InventoryDto() {
     }
 
-    public InventoryDto(Integer idInventory, Integer idProduct, Integer quantity, String productSize, BigDecimal productPrice, String barCode) {
-        this.idInventory = idInventory;
+    public InventoryDto(Integer id, Integer idProduct, Integer quantity, String productSize, BigDecimal productPrice, String barCode) {
+        this.id = id;
         this.idProduct = idProduct;
         this.quantity = quantity;
         this.productSize = productSize;
@@ -32,12 +32,12 @@ public class InventoryDto {
 
     // --- Getters & Setters ---
 
-    public Integer getIdInventory() {
-        return idInventory;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdInventory(Integer idInventory) {
-        this.idInventory = idInventory;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getIdProduct() {
@@ -86,7 +86,7 @@ public class InventoryDto {
     @Override
     public String toString() {
         return "InventoryDto{" +
-                "idInventory=" + idInventory +
+                "id=" + id +
                 ", idProduct=" + idProduct +
                 ", quantity=" + quantity +
                 ", productSize='" + productSize + '\'' +
@@ -94,4 +94,6 @@ public class InventoryDto {
                 ", barCode='" + barCode + '\'' +
                 '}';
     }
+
+
 }
