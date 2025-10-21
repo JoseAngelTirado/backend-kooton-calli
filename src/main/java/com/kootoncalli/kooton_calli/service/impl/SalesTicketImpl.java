@@ -22,7 +22,7 @@ public class SalesTicketImpl implements SalesTicketService {
 
       @Override
       public SalesTicketDto save(SalesTicketDto salesTicketDto){
-            salesTicketDto.setIdTicket(null);
+            salesTicketDto.setId(null);
             SalesTicket salesTicketToSave = salesTicketDtoToSalesTicket (salesTicketDto);
             SalesTicket createdSalesTicket = salesTicketRepository.save(salesTicketToSave);
       }
@@ -30,11 +30,9 @@ public class SalesTicketImpl implements SalesTicketService {
 
       private SalesTicket salesTicketDtoToSalesTicket(SalesTicketDto salesTicketDto) {
             SalesTicket salesTicket = new SalesTicket();
-            salesTicket.setId(salesTicketDto.getIdTicket());
+            salesTicket.setId(salesTicketDto.getId());
             salesTicket.setTotalAmount(salesTicketDto.getTotalAmount()); 
             salesTicket.setDateTime(salesTicketDto.getDateTime());
-            salesTicket.setIdCustomer(salesTicketDto.getIdCustomer());
-            salesTicket.setIdEmployee(salesTicketDto.getIdEmployee());
             return salesTicket;
       }
 
@@ -42,9 +40,7 @@ public class SalesTicketImpl implements SalesTicketService {
             SalesTicketDto salesTicketDto = new SalesTicketDto(
             salesTicket.getId(),
             salesTicket.getTotalAmount(), 
-            salesTicket.getDateTime(),
-            salesTicket.getIdCustomer(),
-            salesTicket.getIdEmployee()
+            salesTicket.getDateTime()
             );
             return salesTicketDto;
       }
@@ -67,11 +63,10 @@ public class SalesTicketImpl implements SalesTicketService {
             SalesTicketDto salesTicketDto1 = new SalesTicketDto(
             salesTicket.getId(), 
             salesTicket.getTotalAmount(), 
-            salesTicket.getDateTime(), 
-            salesTicket.getIdCustomer(), 
-            salesTicket.getIdEmployee()
+            salesTicket.getDateTime()
             );
-            salesTicket.add(salesTicketDto);
+            salesTicketDto.add(salesTicketDto1);
+
         }
         return salesTicketDto;
     }
