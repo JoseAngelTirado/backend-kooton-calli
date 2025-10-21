@@ -31,12 +31,12 @@ public class SalesTicket {
 
     // Customer (buyer user)
     @ManyToOne
-    @JoinColumn(name = "id_customer", referencedColumnName = "id_user")
+    @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private User customer;
 
     // Employee (assisting user)
     @ManyToOne
-    @JoinColumn(name = "id_employee", referencedColumnName = "id_user")
+    @JoinColumn(name = "id_employee", referencedColumnName = "id")
     private User employee;
     
 
