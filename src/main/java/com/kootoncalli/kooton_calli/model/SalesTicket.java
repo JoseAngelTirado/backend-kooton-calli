@@ -3,8 +3,11 @@ package com.kootoncalli.kooton_calli.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.kootoncalli.kooton_calli.dto.SalesTicketDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,12 +29,12 @@ public class SalesTicket {
     @CreationTimestamp
     @Column(name = "date_time", nullable = false, updatable = false) private LocalDateTime dateTime;
 
-    // Cliente (usuario que compra)
+    // Customer (buyer user)
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id_user")
     private User customer;
 
-    // Empleado (usuario que atiende)
+    // Employee (assisting user)
     @ManyToOne
     @JoinColumn(name = "id_employee", referencedColumnName = "id_user")
     private User employee;
@@ -120,6 +123,10 @@ public class SalesTicket {
         } else if (!dateTime.equals(other.dateTime))
             return false;
         return true;
+    }
+
+    public void add(List<SalesTicketDto> salesTicketDto) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

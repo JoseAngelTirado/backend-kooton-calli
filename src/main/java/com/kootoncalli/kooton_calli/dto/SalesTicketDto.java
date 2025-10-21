@@ -3,11 +3,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class SalesTicketDto {
-	private Integer idTicket;
+	private Integer id;
 	private BigDecimal totalAmount;
 	private LocalDateTime dateTime;
-	private Integer idCustomer;
-	private Integer idEmployee;
 	
 	// Empty constructor
 	public SalesTicketDto() {
@@ -15,22 +13,20 @@ public class SalesTicketDto {
 	}
 	
 	// Constructor with fields
-	public SalesTicketDto(Integer idTicket, BigDecimal totalAmount, LocalDateTime dateTime, Integer idCustomer,
-			Integer idEmployee) {
-		this.idTicket = idTicket;
+	public SalesTicketDto(Integer id, BigDecimal totalAmount, LocalDateTime dateTime) {
+		this.id = id;
 		this.totalAmount = totalAmount;
 		this.dateTime = dateTime;
-		this.idCustomer = idCustomer;
-		this.idEmployee = idEmployee;
+
 	}
 	
 	// Getters and setters
-	public Integer getIdTicket() {
-		return idTicket;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdTicket(Integer idTicket) {
-		this.idTicket = idTicket;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public BigDecimal getTotalAmount() {
@@ -48,37 +44,17 @@ public class SalesTicketDto {
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
-
-	public Integer getIdCustomer() {
-		return idCustomer;
-	}
-
-	public void setIdCustomer(Integer idCustomer) {
-		this.idCustomer = idCustomer;
-	}
-
-	public Integer getIdEmployee() {
-		return idEmployee;
-	}
-
-	public void setIdEmployee(Integer idEmployee) {
-		this.idEmployee = idEmployee;
-	}
 	
 	// ToString
 	@Override
 	public String toString() {
 	StringBuilder builder = new StringBuilder();
-		builder.append("SalesTicket [idTicket=");
-		builder.append(idTicket);
+		builder.append("SalesTicket [id=");
+		builder.append(id);
 		builder.append(", totalAmount=");
 		builder.append(totalAmount);
 		builder.append(", dateTime=");
 		builder.append(dateTime);
-		builder.append(", idCustomer=");
-		builder.append(idCustomer);
-		builder.append(", idEmployee=");
-		builder.append(idEmployee);
 		builder.append("]");
 		return builder.toString();
 	}
