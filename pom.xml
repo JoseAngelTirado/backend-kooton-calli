@@ -53,11 +53,11 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
+    		<groupId>org.mariadb.jdbc</groupId>
     		<artifactId>mariadb-java-client</artifactId>
-    		<version>3.1.6</version>
+    		<version>3.1.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
