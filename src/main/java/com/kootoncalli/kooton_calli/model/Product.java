@@ -21,6 +21,7 @@ public class Product {
     @Column(name="subcategory", length = 50, nullable = false) private String subcategory;
     @Column(name="category", length = 50, nullable = false) private String category;
     @Column(name="description", length = 255, nullable = false) private String description;
+    @Column(name="img_url", length = 255, nullable = false) private String imgUrl;
 
     //Relacion OneToMany para la relacion con llave foranea en la tabla SaleProduct
     @OneToMany(mappedBy = "product")
@@ -32,12 +33,13 @@ public class Product {
 
     public Product() {}
 
-    public Product(Integer id, String name, String subcategory, String category, String description) {
+    public Product(Integer id, String name, String subcategory, String category, String description, String imgUrl) {
         this.id = id;
         this.name = name;
         this.subcategory = subcategory;
         this.category = category;
         this.description = description;
+        this.imgUrl = imgUrl;
     }
 
     public Integer getId() {
@@ -80,6 +82,14 @@ public class Product {
         this.description = description;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -93,6 +103,8 @@ public class Product {
         builder.append(category);
         builder.append(", description=");
         builder.append(description);
+        builder.append(", imgUrl=");
+        builder.append(imgUrl);
         builder.append("]");
         return builder.toString();
     }
@@ -106,6 +118,7 @@ public class Product {
         result = prime * result + ((subcategory == null) ? 0 : subcategory.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((imgUrl == null) ? 0 : imgUrl.hashCode());
         return result;
     }
 
@@ -143,10 +156,12 @@ public class Product {
                 return false;
         } else if (!description.equals(other.description))
             return false;
+        if (imgUrl == null) {
+            if (other.imgUrl != null)
+                return false;
+        } else if (!imgUrl.equals(other.imgUrl))
+            return false;
         return true;
     }
-
-
     
-
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.kootoncalli.kooton_calli.dto.DiscountDto;
 import com.kootoncalli.kooton_calli.service.DiscountService;
 
-
+// Handle HTTP Request of CRUD methods
 @RestController
 @RequestMapping("/api/v1/discounts")
 @CrossOrigin(origins = "*")
