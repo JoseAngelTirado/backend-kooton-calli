@@ -1,6 +1,5 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,16 +39,14 @@ public class SalesTicketImpl implements SalesTicketService {
 
     @Override
     public List<SalesTicketDto> findAll() {
-        List<SalesTicketDto> salesTicketDtoList = new ArrayList<>();
-        Iterable<SalesTicket> salesTickets = salesTicketRepository.findAll();
-        for (SalesTicket salesTicket : salesTickets) {
-            salesTicketDtoList.add(salesTicketToSalesTicketDto(salesTicket));
-        }
-        return salesTicketDtoList;
+        return ((List<SalesTicket>) salesTicketRepository.findAll())
+            .stream()
+            .map(this::salesTicketToSalesTicketDto)
+            .toList(); // Java 16+ (o usa Collectors.toList() si estás en Java 11)
     }
 
     @Override
-    public SalesTicketDto update(Integer id, SalesTicketDto salesTicketDto) {
+    public SalesTicketDto updateSalesTicket(Integer id, SalesTicketDto salesTicketDto) {
         SalesTicket existingSalesTicket = salesTicketRepository.findById(id)
             .orElseThrow(() -> new IllegalStateException("The Ticket does not exist with id: " + id));
 

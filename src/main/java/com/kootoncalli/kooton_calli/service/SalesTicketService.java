@@ -12,9 +12,10 @@ public interface  SalesTicketService {
 
     List<SalesTicketDto> findAll();
 
-    SalesTicketDto update(Integer id, SalesTicketDto salesTicketDto);
+    SalesTicketDto updateSalesTicket(Integer id, SalesTicketDto salesTicketDto);
 
     void deleteById(Integer id);
+
 
 
 }
