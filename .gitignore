@@ -32,8 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-## properties##
-# application-local.properties
-application-dev.properties
-application-test.properties
-application.properties
+# Archivos properties de configuración
+src/main/resources/application-dev.properties
+src/main/resources/application-test.properties
+src/main/resources/application.properties
