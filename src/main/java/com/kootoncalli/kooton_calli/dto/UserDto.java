@@ -8,16 +8,19 @@ public class UserDto {
     private String name;
     private String lastName;
     private String phone;
+    private Integer idRole;
 
     public UserDto() {}
 
-    public UserDto(Integer id, String email, String password, String name, String lastName, String phone) {
+    public UserDto(Integer id, String email, String password, String name, String lastName, String phone,
+            Integer idRole) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.lastName = lastName;
-        this.phone = phone;  
+        this.phone = phone;
+        this.idRole = idRole;
     }
 
     public Integer getId() {
@@ -68,6 +71,15 @@ public class UserDto {
         this.phone = phone;
     }
 
+    public Integer getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(Integer idRole) {
+        this.idRole = idRole;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,6 +90,7 @@ public class UserDto {
         .append(", name=").append(name)
         .append(", lastName=").append(lastName)
         .append(", phone=").append(phone)
+        .append(", idRole=").append(idRole)
         .append("]");
         return sb.toString();
     }
