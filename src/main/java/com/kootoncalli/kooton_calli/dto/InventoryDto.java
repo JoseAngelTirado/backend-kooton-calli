@@ -20,80 +20,103 @@ public class InventoryDto {
     public InventoryDto() {
     }
 
-    public InventoryDto(Integer id, Integer idProduct, Integer quantity, String productSize, BigDecimal productPrice, String barCode) {
-        this.id = id;
-        this.idProduct = idProduct;
-        this.quantity = quantity;
-        this.productSize = productSize;
-        this.productPrice = productPrice;
-        this.barCode = barCode;
-    }
+        
+    public InventoryDto(Integer id, Integer idProduct, Integer quantity, String productSize, BigDecimal productPrice,
+                String barCode) {
+            this.id = id;
+            this.idProduct = idProduct;
+            this.quantity = quantity;
+            this.productSize = productSize;
+            this.productPrice = productPrice;
+            this.barCode = barCode;
+        }
+
 
 
     // --- Getters & Setters ---
+
 
     public Integer getId() {
         return id;
     }
 
+
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public Integer getIdProduct() {
         return idProduct;
     }
 
+
     public void setIdProduct(Integer idProduct) {
         this.idProduct = idProduct;
     }
+
 
     public Integer getQuantity() {
         return quantity;
     }
 
+
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 
     public String getProductSize() {
         return productSize;
     }
 
+
     public void setProductSize(String productSize) {
         this.productSize = productSize;
     }
+
 
     public BigDecimal getProductPrice() {
         return productPrice;
     }
 
+
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 
+
     public String getBarCode() {
         return barCode;
     }
+
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
 
 
+
+
     // --- toString ---
 
     @Override
     public String toString() {
-        return "InventoryDto{" +
-                "id=" + id +
-                ", idProduct=" + idProduct +
-                ", quantity=" + quantity +
-                ", productSize='" + productSize + '\'' +
-                ", productPrice=" + productPrice +
-                ", barCode='" + barCode + '\'' +
-                '}';
-    }
-
+        StringBuilder builder = new StringBuilder();
+        builder.append("Product [id=");
+        builder.append(id);
+        builder.append(", idProduct=");
+        builder.append(idProduct);
+        builder.append(", quantity=");
+        builder.append(quantity);
+        builder.append(", productSize=");
+        builder.append(productSize);
+        builder.append(", productPrice=");
+        builder.append(productPrice);
+        builder.append(", barCode=");
+        builder.append(barCode);
+        builder.append("]");
+        return builder.toString();
+}
 
 }
