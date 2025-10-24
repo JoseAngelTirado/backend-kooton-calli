@@ -93,6 +93,14 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
+    public Set<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(Set<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

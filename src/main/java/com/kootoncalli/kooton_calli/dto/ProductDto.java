@@ -1,5 +1,7 @@
 package com.kootoncalli.kooton_calli.dto;
 
+import java.util.List;
+
 public class ProductDto {
 
     private Integer id;
@@ -8,17 +10,31 @@ public class ProductDto {
     private String category;
     private String description;
     private String imgUrl;
+    private List<InventoryDto> inventories;
+
     public ProductDto() {
 
     }
-
-    public ProductDto(Integer id, String name, String subcategory, String category, String description, String imgUrl) {
+    
+    public ProductDto(Integer id, String name, String subcategory, String category, 
+                     String description, String imgUrl) {
         this.id = id;
         this.name = name;
         this.subcategory = subcategory;
         this.category = category;
         this.description = description;
         this.imgUrl = imgUrl;
+    }
+
+    public ProductDto(Integer id, String name, String subcategory, String category, String description, String imgUrl,
+            List<InventoryDto> inventories) {
+        this.id = id;
+        this.name = name;
+        this.subcategory = subcategory;
+        this.category = category;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.inventories = inventories;
     }
 
     public Integer getId() {
@@ -69,10 +85,18 @@ public class ProductDto {
         this.imgUrl = imgUrl;
     }
 
+    public List<InventoryDto> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(List<InventoryDto> inventories) {
+        this.inventories = inventories;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Product [id=");
+        builder.append("TuClase [id=");
         builder.append(id);
         builder.append(", name=");
         builder.append(name);
@@ -84,6 +108,8 @@ public class ProductDto {
         builder.append(description);
         builder.append(", imgUrl=");
         builder.append(imgUrl);
+        builder.append(", inventories=");
+        builder.append(inventories); // Esto llamará al toString() de la lista y sus elementos
         builder.append("]");
         return builder.toString();
     }
