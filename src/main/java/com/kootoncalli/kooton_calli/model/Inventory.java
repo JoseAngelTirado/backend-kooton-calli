@@ -2,6 +2,8 @@ package com.kootoncalli.kooton_calli.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,8 @@ public class Inventory {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_product", referencedColumnName = "id"  ,nullable = false)
+    @JoinColumn(name = "id_product", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private Product product;
 
     public Inventory(Integer id, Integer quantity, String productSize, BigDecimal productPrice, String barCode) {

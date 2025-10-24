@@ -42,7 +42,6 @@ public class ProductServiceImpl implements ProductService {
         return productToProductDto(product); 
     }
 
-    // 🔹 CONVERTIR ENTITY → DTO
     private ProductDto productToProductDto(Product product) {
         ProductDto productDto = new ProductDto(
             product.getId(),
@@ -64,7 +63,6 @@ public class ProductServiceImpl implements ProductService {
         return productDto;
     }
 
-    // 🔹 CONVERTIR INVENTORY → DTO
     private InventoryDto convertInventoryToDto(Inventory inventory) {
         InventoryDto dto = new InventoryDto();
         dto.setId(inventory.getId());
@@ -78,20 +76,19 @@ public class ProductServiceImpl implements ProductService {
         return dto;
     }
 
-    // 🔹 GUARDAR PRODUCTO + INVENTORIES EN CASCADA
     @Override
     public ProductDto save(ProductDto productDto) {
-        productDto.setId(null); // Evita sobrescribir
-        Product productToSave = productDtoToProduct(productDto);
+       productDto.setId(null); // Evita sobrescribir
+    Product productToSave = productDtoToProduct(productDto);
 
-        // 💡 save() guardará producto + inventories automáticamente gracias al cascade
-        Product createdProduct = productRepository.save(productToSave);
+    Product createdProduct = productRepository.save(productToSave);
 
-        // Retorna el producto recién guardado convertido a DTO
-        return productToProductDto(createdProduct);
+    Product reloadedProduct = productRepository.findById(createdProduct.getId())
+            .orElseThrow(() -> new IllegalStateException("Error reloading product after save"));
+
+    return productToProductDto(reloadedProduct);
     }
 
-    // 🔹 CONVERTIR DTO → ENTITY (AHORA CON INVENTORIES)
     private Product productDtoToProduct(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());
@@ -124,7 +121,6 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
-    // 🔹 ACTUALIZAR PRODUCTO
     @Override
     public ProductDto update(Integer id, ProductDto productDto) {
         Product existingProduct = productRepository.findById(id)
