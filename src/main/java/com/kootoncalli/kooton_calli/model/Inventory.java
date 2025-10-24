@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="invetories") // Nota: Esto asume que el nombre de tu tabla es 'invetories' y no 'inventories'
+@Table(name="inventories") 
 public class Inventory {
 
     @Id
