@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
         user.setPhone(userDto.getPhone());
-        // ← Agregar lógica para asignar el Role
+        // Agregar lógica para asignar el Role
         if (userDto.getIdRole() != null) {
             Role role = roleRepository.findById(userDto.getIdRole())
                 .orElseThrow(() -> new IllegalStateException("Role not found with id: " + userDto.getIdRole()));
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
             user.getName(),
             user.getLastName(),
             user.getPhone(),
-            user.getRole() != null ? user.getRole().getId() : null // ← Incluir idRol
+            user.getRole() != null ? user.getRole().getId() : null //Incluir idRol
         );
         return userDto;
     }

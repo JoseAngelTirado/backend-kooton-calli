@@ -17,10 +17,6 @@ public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer id;
-
-    
-    @Column(name="id_product", nullable = false) 
-    private Integer productId; 
     @Column(name="quantity")private Integer quantity;
     @Column(name="product_size", length = 3, nullable = false) private String productSize;
     @Column(name="product_price", nullable=false, precision = 10, scale = 2)private BigDecimal productPrice;
@@ -31,7 +27,7 @@ public class Inventory {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_product",  nullable = false)
+    @JoinColumn(name = "id_product", referencedColumnName = "id"  ,nullable = false)
     private Product product;
 
     public Inventory(Integer id, Integer quantity, String productSize, BigDecimal productPrice, String barCode) {
@@ -42,52 +38,85 @@ public class Inventory {
         this.barCode = barCode;
     }
 
+    
+    
     public Integer getId() {
         return id;
     }
+
+
 
     public void setId(Integer id) {
         this.id = id;
     }
 
+
+
     public Integer getQuantity() {
         return quantity;
     }
+
+
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
+
+
     public String getProductSize() {
         return productSize;
     }
+
+
 
     public void setProductSize(String productSize) {
         this.productSize = productSize;
     }
 
+
+
     public BigDecimal getProductPrice() {
         return productPrice;
     }
+
+
 
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 
+
+
     public String getBarCode() {
         return barCode;
     }
+
+
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
 
-    
+
+
+    public Product getProduct() {
+        return product;
+    }
+
+
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Product [productId=");
-        builder.append(productId);
+        builder.append(product);
         builder.append(", quantity=");
         builder.append(quantity);
         builder.append(", productSize=");

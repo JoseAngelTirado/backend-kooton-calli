@@ -8,18 +8,36 @@ import org.springframework.stereotype.Service;
 
 import com.kootoncalli.kooton_calli.dto.InventoryDto;
 import com.kootoncalli.kooton_calli.model.Inventory;
+import com.kootoncalli.kooton_calli.model.Product;
 import com.kootoncalli.kooton_calli.repository.InventoryRepository;
+import com.kootoncalli.kooton_calli.repository.ProductRepository;
 import com.kootoncalli.kooton_calli.service.InventoryService;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
-    private final InventoryRepository inventoryRepository;
 
-    public InventoryServiceImpl(InventoryRepository inventoryRepository) {
+    private final InventoryRepository inventoryRepository;
+    private final ProductRepository productRepository;
+
+    //inyeccion de repositorios 
+    public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductRepository productRepository) {
         this.inventoryRepository = inventoryRepository;
+        this.productRepository = productRepository;
     }
 
-    private Inventory inventoryDtoToInventory(InventoryDto inventoryDto){
+
+    //metodo CRUD save
+    @Override
+    public InventoryDto save(InventoryDto inventoryDto) {
+        if(inventoryDto.getIdProduct()==null){
+            throw new IllegalArgumentException("Producto ID cannot be null");
+        }
+        Inventory inventoryToSave = inventoryDtoToInventory(inventoryDto);
+        Inventory createdInventory = inventoryRepository.save(inventoryToSave);
+        return inventoryToInventoryDto(createdInventory);
+    }
+
+     private Inventory inventoryDtoToInventory(InventoryDto inventoryDto) {
         Inventory inventory = new Inventory();
         inventory.setId(inventoryDto.getId());
         inventory.setBarCode(inventoryDto.getBarCode());
@@ -27,17 +45,30 @@ public class InventoryServiceImpl implements InventoryService {
         inventory.setProductSize(inventoryDto.getProductSize());
         inventory.setProductPrice(inventoryDto.getProductPrice());
 
+        // Manejo de la relación con Product
+        if (inventoryDto.getIdProduct() != null) {
+            Product product = productRepository.findById(inventoryDto.getIdProduct())
+                .orElseThrow(() -> new IllegalStateException("Product not found with id: " + inventoryDto.getIdProduct()));
+            inventory.setProduct(product);
+        }
+
         return inventory;
     }
 
-    @Override
-    public InventoryDto save(InventoryDto inventoryDto) {
-    
-        inventoryDto.setId(null);
-        Inventory inventoryToSave = inventoryDtoToInventory(inventoryDto);
-        Inventory createdInventory = inventoryRepository.save(inventoryToSave);
-        return inventoryToDto(createdInventory);
+    private InventoryDto inventoryToInventoryDto(Inventory inventory) {
+        Integer productId = (inventory.getProduct() != null) ? inventory.getProduct().getId() : null;
+
+        return new InventoryDto(
+            inventory.getId(),
+            productId,
+            inventory.getQuantity(),
+            inventory.getProductSize(),
+            inventory.getProductPrice(),
+            inventory.getBarCode()
+        );
     }
+
+
 
     @Override
     public InventoryDto findById(Integer id) {
@@ -46,7 +77,7 @@ public class InventoryServiceImpl implements InventoryService {
             throw new IllegalStateException("The master table does not contain any register regarding id: "+ id);
             }
             Inventory existingInventory = inventoryOptional.get();
-            return inventoryToDto(existingInventory);
+            return inventoryToInventoryDto(existingInventory);
     }
 
     @Override
@@ -54,7 +85,7 @@ public class InventoryServiceImpl implements InventoryService {
         Iterable<Inventory> inventories = inventoryRepository.findAll();
         List<InventoryDto> inventoryDtos = new ArrayList<>();
         for(Inventory inventory : inventories){
-            inventoryDtos.add(inventoryToDto(inventory));
+            inventoryDtos.add(inventoryToInventoryDto(inventory));
         }
         return inventoryDtos;
     }
@@ -73,7 +104,7 @@ public class InventoryServiceImpl implements InventoryService {
             existingInventory.setProductPrice(inventoryDto.getProductPrice());
 
 
-            return inventoryToDto(inventoryRepository.save(updatedInventory));
+            return inventoryToInventoryDto(inventoryRepository.save(updatedInventory));
     
     }
 
@@ -86,17 +117,7 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryRepository.deleteById(id);
     }
 
-    private InventoryDto inventoryToDto(Inventory inventory){
-        InventoryDto inventoryDto = new InventoryDto(
-            inventory.getId(),
-            inventory.getId(),
-            inventory.getQuantity(),
-            inventory.getProductSize(),
-            inventory.getProductPrice(),
-            inventory.getBarCode()
-        );
-        return inventoryDto;
-    }
+    
 
     private Inventory InventoryDtoToInventory(InventoryDto inventoryDto){
         Inventory inventory = new Inventory();

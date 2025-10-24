@@ -9,7 +9,7 @@ import com.kootoncalli.kooton_calli.model.Inventory;
 public interface InventoryRepository extends CrudRepository<Inventory, Integer>{
 
     // CORREGIDO: Spring ahora entiende "Buscar por el campo llamado 'productId'"
-    List<Inventory> findByProductId(Integer productId);
+    List<Inventory> findByProduct_Id(Integer productId);
     
     Optional<Inventory> findByBarCode(String barCode);
 }
