@@ -30,6 +30,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<Discount> discounts = new HashSet<>();
 
+    @OneToMany(mappedBy =  "product")
+    private Set<Inventory> inventories = new HashSet<>();
+
 
     public Product() {}
 

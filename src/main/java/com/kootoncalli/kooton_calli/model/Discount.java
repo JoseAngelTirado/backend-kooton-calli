@@ -99,7 +99,6 @@ public class Discount {
         return builder.toString();
     }
 
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -111,7 +110,6 @@ public class Discount {
         result = prime * result + ((discountEndDate == null) ? 0 : discountEndDate.hashCode());
         return result;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -149,10 +147,5 @@ public class Discount {
             return false;
         return true;
     }
-
-
-    
-
-    
 
 }
