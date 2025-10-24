@@ -3,6 +3,7 @@ package com.kootoncalli.kooton_calli.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,8 +31,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<Discount> discounts = new HashSet<>();
 
-    @OneToMany(mappedBy =  "product")
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Inventory> inventories = new HashSet<>();
+
 
 
     public Product() {}

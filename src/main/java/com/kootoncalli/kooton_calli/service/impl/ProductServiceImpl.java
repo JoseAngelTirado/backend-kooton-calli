@@ -1,8 +1,9 @@
 package com.kootoncalli.kooton_calli.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -25,26 +26,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Iterable<ProductDto> findAll() {
         List<ProductDto> productsDto = new ArrayList<>();
-        
         List<Product> products = productRepository.findAll();
         
         for (Product p : products) {
-            ProductDto productDto = productToProductDto(p);
-            productsDto.add(productDto);
+            productsDto.add(productToProductDto(p));
         }
         return productsDto;
     }
 
+     // 🔹 OBTENER PRODUCTO POR ID
     @Override
     public ProductDto findById(Integer id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isEmpty()) {
-            throw new IllegalStateException("Product with id " + id + " not found");
-        }
-        Product existingProduct = productOptional.get();
-        return productToProductDto(existingProduct); 
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Product with id " + id + " not found"));
+        return productToProductDto(product); 
     }
 
+    // 🔹 CONVERTIR ENTITY → DTO
     private ProductDto productToProductDto(Product product) {
         ProductDto productDto = new ProductDto(
             product.getId(),
@@ -55,47 +53,45 @@ public class ProductServiceImpl implements ProductService {
             product.getImgUrl()
         );
         
-        // AÑADE ESTA PARTE: Convertir los inventories
         if (product.getInventories() != null && !product.getInventories().isEmpty()) {
             List<InventoryDto> inventoryDtos = new ArrayList<>();
             
             for (Inventory inventory : product.getInventories()) {
-                InventoryDto inventoryDto = convertInventoryToDto(inventory);
-                inventoryDtos.add(inventoryDto);
+                inventoryDtos.add(convertInventoryToDto(inventory));
             }
-            
             productDto.setInventories(inventoryDtos);
         }
-        
         return productDto;
     }
 
-    // MÉTODO AUXILIAR PARA CONVERTIR INVENTORY A DTO
+    // 🔹 CONVERTIR INVENTORY → DTO
     private InventoryDto convertInventoryToDto(Inventory inventory) {
-        InventoryDto inventoryDto = new InventoryDto();
-        
-        inventoryDto.setId(inventory.getId());
-        inventoryDto.setQuantity(inventory.getQuantity());
-        inventoryDto.setProductSize(inventory.getProductSize());
-        inventoryDto.setProductPrice(inventory.getProductPrice());
-        inventoryDto.setBarCode(inventory.getBarCode());
-        
+        InventoryDto dto = new InventoryDto();
+        dto.setId(inventory.getId());
+        dto.setQuantity(inventory.getQuantity());
+        dto.setProductSize(inventory.getProductSize());
+        dto.setProductPrice(inventory.getProductPrice());
+        dto.setBarCode(inventory.getBarCode());
         if (inventory.getProduct() != null) {
-            inventoryDto.setIdProduct(inventory.getProduct().getId());
+            dto.setIdProduct(inventory.getProduct().getId());
         }
-        
-        return inventoryDto;
+        return dto;
     }
 
-    // LOS DEMÁS MÉTODOS PERMANECEN IGUAL (no los modifiques)
+    // 🔹 GUARDAR PRODUCTO + INVENTORIES EN CASCADA
     @Override
     public ProductDto save(ProductDto productDto) {
-        productDto.setId(null);
+        productDto.setId(null); // Evita sobrescribir
         Product productToSave = productDtoToProduct(productDto);
+
+        // 💡 save() guardará producto + inventories automáticamente gracias al cascade
         Product createdProduct = productRepository.save(productToSave);
+
+        // Retorna el producto recién guardado convertido a DTO
         return productToProductDto(createdProduct);
     }
 
+    // 🔹 CONVERTIR DTO → ENTITY (AHORA CON INVENTORIES)
     private Product productDtoToProduct(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());
@@ -104,33 +100,65 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productDto.getCategory());
         product.setDescription(productDto.getDescription());
         product.setImgUrl(productDto.getImgUrl());
+
+        // 🔹 Mapear inventories si existen en el DTO
+        if (productDto.getInventories() != null && !productDto.getInventories().isEmpty()) {
+            Set<Inventory> inventories = new HashSet<>();
+
+            for (InventoryDto invDto : productDto.getInventories()) {
+                Inventory inv = new Inventory();
+                inv.setQuantity(invDto.getQuantity());
+                inv.setProductSize(invDto.getProductSize());
+                inv.setProductPrice(invDto.getProductPrice());
+                inv.setBarCode(invDto.getBarCode());
+                
+                // 🔹 IMPORTANTE: establecer relación bidireccional
+                inv.setProduct(product);
+
+                inventories.add(inv);
+            }
+
+            product.setInventories(inventories);
+        }
+
         return product;
     }
 
+    // 🔹 ACTUALIZAR PRODUCTO
     @Override
     public ProductDto update(Integer id, ProductDto productDto) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isEmpty()) {
-            throw new IllegalStateException("Product with id " + id + " not found");
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Product with id " + id + " not found"));
+
+        existingProduct.setName(productDto.getName());
+        existingProduct.setSubcategory(productDto.getSubcategory());
+        existingProduct.setCategory(productDto.getCategory());
+        existingProduct.setDescription(productDto.getDescription());
+        existingProduct.setImgUrl(productDto.getImgUrl());
+
+        // Si llegan inventories nuevos, los actualizamos también
+        if (productDto.getInventories() != null) {
+            existingProduct.getInventories().clear();
+            for (InventoryDto invDto : productDto.getInventories()) {
+                Inventory inv = new Inventory();
+                inv.setQuantity(invDto.getQuantity());
+                inv.setProductSize(invDto.getProductSize());
+                inv.setProductPrice(invDto.getProductPrice());
+                inv.setBarCode(invDto.getBarCode());
+                inv.setProduct(existingProduct);
+                existingProduct.getInventories().add(inv);
+            }
         }
-        Product existingProduct = productOptional.get();
 
-        Product newProduct = productDtoToProduct(productDto);
-        existingProduct.setName(newProduct.getName());
-        existingProduct.setSubcategory(newProduct.getSubcategory());
-        existingProduct.setCategory(newProduct.getCategory());
-        existingProduct.setDescription(newProduct.getDescription());
-        existingProduct.setImgUrl(newProduct.getImgUrl());
-
-        return productToProductDto(productRepository.save(existingProduct));
+        Product updatedProduct = productRepository.save(existingProduct);
+        return productToProductDto(updatedProduct);
     }
 
+    // 🔹 ELIMINAR PRODUCTO
+    @Override
     public void deleteById(Integer id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isEmpty()) {
-            throw new IllegalStateException("Product with id " + id + " not found");
-        }
-        Product existingProduct = productOptional.get();
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Product with id " + id + " not found"));
         productRepository.delete(existingProduct);
     }
 
