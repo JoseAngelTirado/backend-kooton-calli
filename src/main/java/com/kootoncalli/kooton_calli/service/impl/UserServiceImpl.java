@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.kootoncalli.kooton_calli.dto.UserDto;
+import com.kootoncalli.kooton_calli.model.Role;
 import com.kootoncalli.kooton_calli.model.User;
+import com.kootoncalli.kooton_calli.repository.RoleRepository;
 import com.kootoncalli.kooton_calli.repository.UserRepository;
 import com.kootoncalli.kooton_calli.service.UserService;
 
@@ -16,10 +18,11 @@ import com.kootoncalli.kooton_calli.service.UserService;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -39,6 +42,14 @@ public class UserServiceImpl implements UserService{
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
         user.setPhone(userDto.getPhone());
+        // ← Agregar lógica para asignar el Role
+        if (userDto.getIdRole() != null) {
+            Role role = roleRepository.findById(userDto.getIdRole())
+                .orElseThrow(() -> new IllegalStateException("Role not found with id: " + userDto.getIdRole()));
+            user.setRole(role);
+            
+        }
+        
         return user;
     }
 
@@ -50,7 +61,8 @@ public class UserServiceImpl implements UserService{
             user.getPassword(),
             user.getName(),
             user.getLastName(),
-            user.getPhone()
+            user.getPhone(),
+            user.getRole() != null ? user.getRole().getId() : null // ← Incluir idRol
         );
         return userDto;
     }
@@ -72,7 +84,7 @@ public class UserServiceImpl implements UserService{
         List<UserDto> usersDto = new ArrayList<>();
         Iterable<User> users = userRepository.findAll();
         for(User user: users){
-            UserDto userDto = new UserDto(user.getId(), user.getEmail(), user.getPassword(),user.getName(), user.getLastName(), user.getPhone());
+            UserDto userDto = new UserDto(user.getId(), user.getEmail(), user.getPassword(),user.getName(), user.getLastName(), user.getPhone(), user.getRole() != null ? user.getRole().getId() : null);
             usersDto.add(userDto);
         }
         return usersDto;
@@ -93,6 +105,7 @@ public class UserServiceImpl implements UserService{
         existingUser.setName(newUser.getName());
         existingUser.setLastName(newUser.getLastName());
         existingUser.setPhone(newUser.getPhone());
+        existingUser.setRole(newUser.getRole());
        
         return userToUserDto(userRepository.save(existingUser));
     }
